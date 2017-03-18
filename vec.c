@@ -1,7 +1,9 @@
-//! vec.h
+//! vec.c
 /*
  * Description: Functions needed for the vector class.
  */
+
+#include <vec.h>
 
 //! Function to add two vectors.
 /*
