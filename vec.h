@@ -12,6 +12,16 @@ struct Vec {
     double z;
 };
 
+//! Function to initialize a new vector.
+/*
+ * @param    double    x coord
+ * @param    double    y coord
+ * @param    double    z coord
+ *
+ * @return   Vec       newly generated vector object
+ */
+Vec newVector(double, double, double);
+
 //! Function to add two vectors.
 /*
  * @param    Vec    first vector 
@@ -19,7 +29,7 @@ struct Vec {
  *
  * @return   Vec    added result of both vectors 
  */
-Vec addVec(const Vec &a, const Vec &b) const;
+Vec addVec(const Vec &a, const Vec &b);
 
 //! Function to subtract two vectors.
 /*
@@ -28,7 +38,7 @@ Vec addVec(const Vec &a, const Vec &b) const;
  *
  * @return   Vec    subtracted result of both vectors
  */
-Vec subVec(const Vec &a, const Vec &b) const;
+Vec subVec(const Vec &a, const Vec &b);
 
 //! Function to multiply a vector with a double.
 /*
@@ -37,7 +47,7 @@ Vec subVec(const Vec &a, const Vec &b) const;
  *
  * @return    Vec       resulting vector multiplied by "b" times
  */
-Vec multiplyVec(const Vec &a, double b) const;
+Vec multiplyVec(const Vec &a, double b);
 
 //! Function to multiply two vectors.
 /*
@@ -46,19 +56,19 @@ Vec multiplyVec(const Vec &a, double b) const;
  *
  * @return    Vec    resultant vector
  */
-Vec multiplyVectors(const Vec &a, const Vec &b) const;
+Vec multiplyVectors(const Vec &a, const Vec &b);
 
 //! Function to return the normal of a given vector.
 /*
- * @param     Vec    original vector 
+ * @param     Vec    original vector
  *
  * @return    Vec    normal of vector
  */
-Vec& norm(const Vec &a);
+Vec& vectorNormal(const Vec &a);
 
 //! Function to calculate the dot-product of a given vector.
 /*
- * @param     Vec    first vector 
+ * @param     Vec    first vector
  * @param     Vec    second vector
  *
  * @return    Vec    dot-product of vectors
@@ -72,4 +82,4 @@ double dot(const Vec &a, const Vec &b);
  *
  * @return    Vec    dot-product of vectors
  */
-Vec modVec(const Vec &a, const Vec &b) const;
+Vec modVec(const Vec &a, const Vec &b);

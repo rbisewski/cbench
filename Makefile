@@ -16,10 +16,12 @@ CFLAGS = -std=c++98 \
 CC = g++
 
 # Headers
-#HDR = cbench.h
+HDR = cbench.h \
+      vec.h
 
 # C sources
-SRC = cbench.c
+SRC = cbench.c \
+      vec.c
 
 # C objects
 OBJ = ${SRC:.c=.o}

@@ -3,7 +3,34 @@
  * Description: Functions needed for the vector class.
  */
 
-#include <vec.h>
+#include "vec.h"
+
+//! Function to initialize a new vector.
+/*
+ * @param    double    x coord
+ * @param    double    y coord
+ * @param    double    z coord
+ *
+ * @return   Vec       newly generated vector object
+ */
+Vec newVector(double x, double y, double z) {
+
+    // Attempt to allocate memory for a new vector.
+    Vec vector = (Vector) calloc(1, sizeof(Vec));
+
+    // Sanity check, make sure this actually returned a vector.
+    if (!vector) {
+        return NULL;
+    }
+
+    // Assign the (x,y,z) coords.
+    vector.x = x;
+    vector.y = y;
+    vector.z = z;
+
+    // Return the newly initialized vector.
+    return vector;
+}
 
 //! Function to add two vectors.
 /*
@@ -12,7 +39,7 @@
  *
  * @return   Vec    added result of both vectors 
  */
-Vec addVec(const Vec &a, const Vec &b) const {
+Vec addVec(const Vec &a, const Vec &b) {
 
     // Input validation, make sure this actually has two vectors.
     if (a == NULL || b == NULL) {
@@ -35,7 +62,7 @@ Vec addVec(const Vec &a, const Vec &b) const {
  *
  * @return   Vec    subtracted result of both vectors
  */
-Vec subVec(const Vec &a, const Vec &b) const {
+Vec subVec(const Vec &a, const Vec &b) {
 
     // Input validation, make sure this actually has two vectors.
     if (a == NULL || b == NULL) {
@@ -58,7 +85,7 @@ Vec subVec(const Vec &a, const Vec &b) const {
  *
  * @return    Vec       resulting vector multiplied by "b" times
  */
-Vec multiplyVec(const Vec &a, double b) const {
+Vec multiplyVec(const Vec &a, double b) {
 
     // Input validation, make sure this actually has a vector.
     if (a == NULL) {
@@ -81,7 +108,7 @@ Vec multiplyVec(const Vec &a, double b) const {
  *
  * @return    Vec    resultant vector
  */
-Vec multiplyVectors(const Vec &a, const Vec &b) const {
+Vec multiplyVectors(const Vec &a, const Vec &b) {
 
     // Input validation, make sure this actually has a vector.
     if (a == NULL && b == NULL) {
@@ -103,7 +130,7 @@ Vec multiplyVectors(const Vec &a, const Vec &b) const {
  *
  * @return    Vec    normal of vector
  */
-Vec& norm(const Vec &a) {
+Vec& vectorNormal(const Vec &a) {
 
     // Input validation, make sure this actually has a vector.
     if (a == NULL) {
@@ -132,7 +159,7 @@ Vec& norm(const Vec &a) {
  *
  * @return    Vec    dot-product of vectors
  */
-double dot(const Vec &a, const Vec &b) const {
+double dot(const Vec &a, const Vec &b) {
 
     // Input validation, make sure this actually has a vector.
     if (a == NULL && b == NULL) {
