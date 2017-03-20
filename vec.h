@@ -6,6 +6,9 @@
 #ifndef __VECTOR_H_
 #define __VECTOR_H_
 
+#include <math.h>
+#include <stdlib.h>
+
 // Structure that defines the vector.
 struct Vec {
 
@@ -67,7 +70,7 @@ Vec multiplyVectors(const Vec &a, const Vec &b);
  *
  * @return    Vec    normal of vector
  */
-Vec& vectorNormal(const Vec &a);
+Vec vectorNormal(const Vec &a);
 
 //! Function to calculate the dot-product of a given vector.
 /*

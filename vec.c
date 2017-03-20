@@ -16,12 +16,7 @@
 Vec newVector(double x, double y, double z) {
 
     // Attempt to allocate memory for a new vector.
-    Vec vector = (Vector) calloc(1, sizeof(Vec));
-
-    // Sanity check, make sure this actually returned a vector.
-    if (!vector) {
-        return NULL;
-    }
+    Vec vector;
 
     // Assign the (x,y,z) coords.
     vector.x = x;
@@ -41,18 +36,8 @@ Vec newVector(double x, double y, double z) {
  */
 Vec addVec(const Vec &a, const Vec &b) {
 
-    // Input validation, make sure this actually has two vectors.
-    if (a == NULL || b == NULL) {
-        return NULL;
-    }
-
-    // Add the (x,y,z) coords of the vectors to vector "a".
-    a.x += b.x;
-    a.y += b.y;
-    a.z += b.z;
-
     // Return the added vector result.
-    return a;
+    return newVector(a.x+b.x, a.y+b.y, a.z+b.z);
 }
 
 //! Function to subtract two vectors.
@@ -64,18 +49,8 @@ Vec addVec(const Vec &a, const Vec &b) {
  */
 Vec subVec(const Vec &a, const Vec &b) {
 
-    // Input validation, make sure this actually has two vectors.
-    if (a == NULL || b == NULL) {
-        return NULL;
-    }
-
-    // Subtract the (x,y,z) coords of the vectors to vector "a".
-    a.x -= b.x;
-    a.y -= b.y;
-    a.z -= b.z;
-
     // Return the subtracted vector result.
-    return a;
+    return newVector(a.x-b.x, a.y-b.y, a.z-b.z);
 }
 
 //! Function to multiply a vector with a double.
@@ -87,18 +62,8 @@ Vec subVec(const Vec &a, const Vec &b) {
  */
 Vec multiplyVec(const Vec &a, double b) {
 
-    // Input validation, make sure this actually has a vector.
-    if (a == NULL) {
-        return NULL;
-    }
-
-    // Multiply the (x,y,z) coords of the vectors by double "b".
-    a.x *= b;
-    a.y *= b;
-    a.z *= b;
-
-    // Return the subtracted vector result.
-    return a;
+    // Return the multiplied vector result.
+    return newVector(a.x*b, a.y*b, a.z*b);
 }
 
 //! Function to multiply two vectors.
@@ -110,18 +75,8 @@ Vec multiplyVec(const Vec &a, double b) {
  */
 Vec multiplyVectors(const Vec &a, const Vec &b) {
 
-    // Input validation, make sure this actually has a vector.
-    if (a == NULL && b == NULL) {
-        return NULL;
-    }
-
-    // Multiply the (x,y,z) coords of the vectors by double "b".
-    a.x *= b.x;
-    a.y *= b.y;
-    a.z *= b.z;
-
-    // Return the subtracted vector result.
-    return a;
+    // Return the multiplied vector result.
+    return newVector(a.x*b.x, a.y*b.y, a.z*b.z);
 }
 
 //! Function to return the normal of a given vector.
@@ -130,12 +85,7 @@ Vec multiplyVectors(const Vec &a, const Vec &b) {
  *
  * @return    Vec    normal of vector
  */
-Vec& vectorNormal(const Vec &a) {
-
-    // Input validation, make sure this actually has a vector.
-    if (a == NULL) {
-        return NULL;
-    }
+Vec vectorNormal(const Vec &a) {
 
     // Calculate the product of squares.
     double ps  = a.x*a.x + a.y*a.y + a.z*a.z;
@@ -143,13 +93,14 @@ Vec& vectorNormal(const Vec &a) {
     // Calculate the inverse product of squares.
     double ips = 0;
     
-    // Safety check, prevent possible divide-by-zero errors.
-    if (ps != 0) {
+    // Safety check, prevent possible divide-by-zero errors or
+    // imaginary-number errors.
+    if (ps > 0) {
         ips = 1 / sqrt(ps);
     }
 
     // Return a reference to the multiply.
-    return multiplyVector(a, ips);
+    return multiplyVec(a, ips);
 }
 
 //! Function to calculate the dot-product of a given vector.
@@ -160,11 +111,6 @@ Vec& vectorNormal(const Vec &a) {
  * @return    Vec    dot-product of vectors
  */
 double dot(const Vec &a, const Vec &b) {
-
-    // Input validation, make sure this actually has a vector.
-    if (a == NULL && b == NULL) {
-        return NULL;
-    }
 
     // Calculate and return the dot-product.
     return a.x*b.x + a.y*b.y + a.z*b.z;
@@ -179,16 +125,11 @@ double dot(const Vec &a, const Vec &b) {
  */
 Vec modVec(const Vec &a, const Vec &b) {
 
-    // Input validation, make sure this actually has a vector.
-    if (a == NULL && b == NULL) {
-        return NULL;
-    }
-
     // Assemble the module of each coord dimension.
-    a.x = a.y * b.z - a.z * b.y;
-    a.y = a.z * b.x - a.x * b.z;
-    a.z = a.x * b.y - a.y * b.x;
+    double x = a.y * b.z - a.z * b.y;
+    double y = a.z * b.x - a.x * b.z;
+    double z = a.x * b.y - a.y * b.x;
 
     // Return the dot-product vector result.
-    return a;
+    return newVector(x,y,z);
 }

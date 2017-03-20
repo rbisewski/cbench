@@ -17,11 +17,13 @@ CC = g++
 
 # Headers
 HDR = cbench.h \
-      vec.h
+      vec.h \
+      ray.h
 
 # C sources
 SRC = cbench.c \
-      vec.c
+      vec.c \
+      ray.c
 
 # C objects
 OBJ = ${SRC:.c=.o}
@@ -48,4 +50,4 @@ cbench: ${OBJ}
 
 clean:
 	@echo cleaning
-	@rm -f cbench cbench.o
+	@rm -f cbench *.o
