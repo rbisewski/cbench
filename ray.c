@@ -14,18 +14,8 @@
  */
 Ray newRay(Vec o, Vec d) {
 
-    // Input validation, make sure this actually got an array.
-    if (!o || !d) {
-        return NULL;
-    }
-
-    // Calloc some memory for the new ray object.
-    Ray ray = calloc(1, sizeof(Ray));
-
-    // Sanity check, make sure this actually properly allocated memory.
-    if (!ray) {
-        return NULL;
-    }
+    // Variable declaration.
+    Ray ray;
 
     // Assign the given vectors to the ray object.
     ray.o = o;
