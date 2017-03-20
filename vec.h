@@ -3,6 +3,9 @@
  * Description: Header file for the vector class.
  */
 
+#ifndef __VECTOR_H_
+#define __VECTOR_H_
+
 // Structure that defines the vector.
 struct Vec {
 
@@ -83,3 +86,5 @@ double dot(const Vec &a, const Vec &b);
  * @return    Vec    dot-product of vectors
  */
 Vec modVec(const Vec &a, const Vec &b);
+
+#endif
