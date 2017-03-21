@@ -1,6 +1,13 @@
 # Version
 VERSION = 17.3
 
+# Includes
+INCLUDES= -I. \
+          -I/usr/include
+
+# Libraries
+LIBS= -L/usr/lib 
+
 # Flags
 CFLAGS = -std=c++98 \
          -O3 \
@@ -46,7 +53,7 @@ all: cbench
 
 cbench: ${OBJ}
 	@echo CC -o $@
-	@${CC} ${CFLAGS} -o $@ cbench.o
+	@${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ ${OBJ}
 
 clean:
 	@echo cleaning
