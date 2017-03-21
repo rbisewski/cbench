@@ -37,7 +37,7 @@ Where "samples" refers to the number of paths to render.
 
 An example usage case would be... 
 
-cbench 700
+cbench 7000
 
 This will attempt to path trace 7000 samples so this could take a long
 time on slower computers, however, anything new should not take more than

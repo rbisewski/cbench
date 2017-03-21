@@ -25,12 +25,14 @@ CC = g++
 # Headers
 HDR = cbench.h \
       vec.h \
-      ray.h
+      ray.h \
+      sphere.h
 
 # C sources
 SRC = cbench.c \
       vec.c \
-      ray.c
+      ray.c \
+      sphere.c
 
 # C objects
 OBJ = ${SRC:.c=.o}
@@ -52,8 +54,8 @@ all: cbench
 	@${CC} -c ${CFLAGS} $<
 
 cbench: ${OBJ}
-	@echo CC -o $@
-	@${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ ${OBJ}
+	@echo ${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ $^
+	@${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ $^
 
 clean:
 	@echo cleaning

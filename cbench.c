@@ -10,59 +10,17 @@
 //       might want to ignore the broken stuff
 //
 
-struct Sphere { 
-    double rad;    // radius
-
-    Vec p, e, c;   // position, emission, color 
-
-    // Reflection type
-    //
-    // 0 --> DIFFuse
-    // 1 --> SPECular,
-    // 2 --> REFRactive
-    //
-    unsigned int refl;
-
-    Sphere(double rad_, Vec p_, Vec e_, Vec c_, int refl_): 
-      rad(rad_), p(p_), e(e_), c(c_), refl(refl_) {} 
-
-    // returns distance, 0 if nohit
-    double intersect(const Ray &r) const {
-
-        //
-        // Solve t^2*d.d + 2*t*(o-p).d + (o-p).(o-p)-R^2 = 0
-        //
-        Vec op = subVec(p, r.o);
-
-        double t;
-        double eps = 1e-4;
-        double b   = dot(op, r.d);
-        double det = b*b - dot(op, op) + rad * rad;
-
-        // If the determinant is less than zero, assume these never intersect.
-        if (det < 0) {
-            return 0;
-        }
-
-        // Otherwise just grab the square fo the determinant.
-        det = sqrt(det); 
-
-        // Finally, calculate and return the distance.
-        return ((t=b-det) > eps) ? t : ((t=b+det)>eps ? t : 0); 
-    } 
-}; 
-
 Sphere spheres[] = {
     //Scene: radius, position, emission, color, material 
-    Sphere(1e5,  newVector( 1e5+1,40.8,81.6),    newVector(0, 0, 0),  newVector(.75,.25,.25),               DIFF),//Left 
-    Sphere(1e5,  newVector(-1e5+99,40.8,81.6),   newVector(0, 0, 0),  newVector(.25,.25,.75),               DIFF),//Rght 
-    Sphere(1e5,  newVector(50.0,40.8, 1e5),      newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Back 
-    Sphere(1e5,  newVector(50.0,40.8,-1e5+170),  newVector(0, 0, 0),  newVector(0.0, 0.0, 0.0),             DIFF),//Frnt 
-    Sphere(1e5,  newVector(50.0, 1e5, 81.6),     newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Botm 
-    Sphere(1e5,  newVector(50.0,-1e5+81.6,81.6), newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Top 
-    Sphere(16.5, newVector(27.0,16.5,47),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), SPEC),//Mirr 
-    Sphere(16.5, newVector(73.0,16.5,78),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), REFR),//Glas 
-    Sphere(600,  newVector(50.0,681.6-.27,81.6), newVector(12,12,12), newVector(0,0,0),                     DIFF) //Lite 
+    newSphere(1e5,  newVector( 1e5+1,40.8,81.6),    newVector(0, 0, 0),  newVector(.75,.25,.25),               DIFF),//Left 
+    newSphere(1e5,  newVector(-1e5+99,40.8,81.6),   newVector(0, 0, 0),  newVector(.25,.25,.75),               DIFF),//Rght 
+    newSphere(1e5,  newVector(50.0,40.8, 1e5),      newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Back 
+    newSphere(1e5,  newVector(50.0,40.8,-1e5+170),  newVector(0, 0, 0),  newVector(0.0, 0.0, 0.0),             DIFF),//Frnt 
+    newSphere(1e5,  newVector(50.0, 1e5, 81.6),     newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Botm 
+    newSphere(1e5,  newVector(50.0,-1e5+81.6,81.6), newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Top 
+    newSphere(16.5, newVector(27.0,16.5,47),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), SPEC),//Mirr 
+    newSphere(16.5, newVector(73.0,16.5,78),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), REFR),//Glas 
+    newSphere(600,  newVector(50.0,681.6-.27,81.6), newVector(12,12,12), newVector(0,0,0),                     DIFF) //Lite 
 }; 
 
 inline double clamp(double x) {
@@ -73,7 +31,7 @@ inline int toInt(double x) {
     return int(pow(clamp(x),1/2.2)*255+.5);
 }
 
-inline bool intersect(const Ray &r, double &t, int &id) {
+inline bool intersection(const Ray &r, double &t, int &id) {
 
     // Generic counter variables.
     int i = 0;
@@ -84,7 +42,7 @@ inline bool intersect(const Ray &r, double &t, int &id) {
     double inf=t=1e20;
 
     for(i=int(n); i--;) {
-        if ((d=spheres[i].intersect(r)) && d<t) {
+        if ((d=intersect(spheres[i], r)) && d<t) {
 	    t=d;
 	    id=i;
 	} 
@@ -116,7 +74,7 @@ Vec radiance(const Ray &r, int depth, unsigned short *Xi) {
     int id = 0;
 
     // If this doesn't intersect, then return black.
-    if (!intersect(r, t, id)) {
+    if (!intersection(r, t, id)) {
         return newVector(0,0,0);
     }
 

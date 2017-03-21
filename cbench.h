@@ -14,6 +14,7 @@
 // Project-wide includes.
 #include "vec.h"
 #include "ray.h"
+#include "sphere.h"
 
 // Defines for the different reflection types.
 #define DIFF 0
