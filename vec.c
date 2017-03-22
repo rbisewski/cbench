@@ -34,7 +34,7 @@ Vec newVector(double x, double y, double z) {
  *
  * @return   Vec    added result of both vectors 
  */
-Vec addVec(const Vec &a, const Vec &b) {
+Vec addVec(const Vec a, const Vec b) {
 
     // Return the added vector result.
     return newVector(a.x+b.x, a.y+b.y, a.z+b.z);
@@ -47,7 +47,7 @@ Vec addVec(const Vec &a, const Vec &b) {
  *
  * @return   Vec    subtracted result of both vectors
  */
-Vec subVec(const Vec &a, const Vec &b) {
+Vec subVec(const Vec a, const Vec b) {
 
     // Return the subtracted vector result.
     return newVector(a.x-b.x, a.y-b.y, a.z-b.z);
@@ -60,7 +60,7 @@ Vec subVec(const Vec &a, const Vec &b) {
  *
  * @return    Vec       resulting vector multiplied by "b" times
  */
-Vec multiplyVec(const Vec &a, double b) {
+Vec multiplyVec(const Vec a, double b) {
 
     // Return the multiplied vector result.
     return newVector(a.x*b, a.y*b, a.z*b);
@@ -73,7 +73,7 @@ Vec multiplyVec(const Vec &a, double b) {
  *
  * @return    Vec    resultant vector
  */
-Vec multiplyVectors(const Vec &a, const Vec &b) {
+Vec multiplyVectors(const Vec a, const Vec b) {
 
     // Return the multiplied vector result.
     return newVector(a.x*b.x, a.y*b.y, a.z*b.z);
@@ -85,7 +85,7 @@ Vec multiplyVectors(const Vec &a, const Vec &b) {
  *
  * @return    Vec    normal of vector
  */
-Vec vectorNormal(const Vec &a) {
+Vec vectorNormal(const Vec a) {
 
     // Calculate the product of squares.
     double ps  = a.x*a.x + a.y*a.y + a.z*a.z;
@@ -110,7 +110,7 @@ Vec vectorNormal(const Vec &a) {
  *
  * @return    Vec    dot-product of vectors
  */
-double dot(const Vec &a, const Vec &b) {
+double dot(const Vec a, const Vec b) {
 
     // Calculate and return the dot-product.
     return a.x*b.x + a.y*b.y + a.z*b.z;
@@ -123,7 +123,7 @@ double dot(const Vec &a, const Vec &b) {
  *
  * @return    Vec    dot-product of vectors
  */
-Vec modVec(const Vec &a, const Vec &b) {
+Vec modVec(const Vec a, const Vec b) {
 
     // Assemble the module of each coord dimension.
     double x = a.y * b.z - a.z * b.y;

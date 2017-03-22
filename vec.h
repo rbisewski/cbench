@@ -10,13 +10,13 @@
 #include <stdlib.h>
 
 // Structure that defines the vector.
-struct Vec {
+typedef struct Vec {
 
     // Coords, also used as rgb colour values.
     double x;
     double y;
     double z;
-};
+} Vec;
 
 //! Function to initialize a new vector.
 /*
@@ -35,7 +35,7 @@ Vec newVector(double, double, double);
  *
  * @return   Vec    added result of both vectors 
  */
-Vec addVec(const Vec &a, const Vec &b);
+Vec addVec(const Vec a, const Vec b);
 
 //! Function to subtract two vectors.
 /*
@@ -44,7 +44,7 @@ Vec addVec(const Vec &a, const Vec &b);
  *
  * @return   Vec    subtracted result of both vectors
  */
-Vec subVec(const Vec &a, const Vec &b);
+Vec subVec(const Vec a, const Vec b);
 
 //! Function to multiply a vector with a double.
 /*
@@ -53,7 +53,7 @@ Vec subVec(const Vec &a, const Vec &b);
  *
  * @return    Vec       resulting vector multiplied by "b" times
  */
-Vec multiplyVec(const Vec &a, double b);
+Vec multiplyVec(const Vec a, double b);
 
 //! Function to multiply two vectors.
 /*
@@ -62,7 +62,7 @@ Vec multiplyVec(const Vec &a, double b);
  *
  * @return    Vec    resultant vector
  */
-Vec multiplyVectors(const Vec &a, const Vec &b);
+Vec multiplyVectors(const Vec a, const Vec b);
 
 //! Function to return the normal of a given vector.
 /*
@@ -70,7 +70,7 @@ Vec multiplyVectors(const Vec &a, const Vec &b);
  *
  * @return    Vec    normal of vector
  */
-Vec vectorNormal(const Vec &a);
+Vec vectorNormal(const Vec a);
 
 //! Function to calculate the dot-product of a given vector.
 /*
@@ -79,7 +79,7 @@ Vec vectorNormal(const Vec &a);
  *
  * @return    Vec    dot-product of vectors
  */
-double dot(const Vec &a, const Vec &b);
+double dot(const Vec a, const Vec b);
 
 //! Function to calculate the modulo of two vectors.
 /*
@@ -88,6 +88,6 @@ double dot(const Vec &a, const Vec &b);
  *
  * @return    Vec    dot-product of vectors
  */
-Vec modVec(const Vec &a, const Vec &b);
+Vec modVec(const Vec a, const Vec b);
 
 #endif

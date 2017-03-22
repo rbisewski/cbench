@@ -6,10 +6,11 @@ INCLUDES= -I. \
           -I/usr/include
 
 # Libraries
-LIBS= -L/usr/lib 
+LIBS= -L/usr/lib \
+      -lm
 
 # Flags
-CFLAGS = -std=c++98 \
+CFLAGS = -std=c99 \
          -O3 \
          -fopenmp \
          -fpic \
@@ -20,7 +21,7 @@ CFLAGS = -std=c++98 \
          -DVERSION=\"${VERSION}\"
 
 # Compiler
-CC = g++
+CC = cc
 
 # Headers
 HDR = cbench.h \
@@ -54,9 +55,9 @@ all: cbench
 	@${CC} -c ${CFLAGS} $<
 
 cbench: ${OBJ}
-	@echo ${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ $^
-	@${CC} ${CFLAGS} ${INCLUDES} ${LIBS} -o $@ $^
+	@echo ${CC} ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} $^
+	@${CC} ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} $^
 
 clean:
 	@echo cleaning
-	@rm -f cbench *.o
+	@rm -f cbench *.o output.ppm

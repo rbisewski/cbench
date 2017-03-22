@@ -10,7 +10,7 @@
 #include "ray.h"
 
 //! Structure to hold the sphere object.
-struct Sphere {
+typedef struct Sphere {
 
     // Radius
     double rad;
@@ -31,7 +31,7 @@ struct Sphere {
     // 2 --> REFRactive
     //
     unsigned int refl;
-}; 
+} Sphere;
 
 //! Function to initialize a new sphere.
 /*
@@ -53,6 +53,6 @@ Sphere newSphere(double, Vec, Vec, Vec, unsigned int);
  * @return    double    if intersect    --> distance
  *                      no intersection --> 0.0
  */
-double intersect(const Sphere &s, const Ray &r);
+double intersect(const Sphere s, const Ray r);
 
 #endif

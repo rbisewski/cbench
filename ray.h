@@ -9,10 +9,10 @@
 #include "vec.h"
 
 //! Structure to hold the ray object.
-struct Ray {
+typedef struct Ray {
     Vec o;
     Vec d;
-}; 
+} Ray;
 
 //! Function to initialize a new ray.
 /*

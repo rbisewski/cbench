@@ -5,50 +5,47 @@
 
 #include "cbench.h"
 
-//
-// TODO: this program is in the process of being rewritten, so
-//       might want to ignore the broken stuff
-//
+Sphere* spheres;
 
-Sphere spheres[] = {
-    //Scene: radius, position, emission, color, material 
-    newSphere(1e5,  newVector( 1e5+1,40.8,81.6),    newVector(0, 0, 0),  newVector(.75,.25,.25),               DIFF),//Left 
-    newSphere(1e5,  newVector(-1e5+99,40.8,81.6),   newVector(0, 0, 0),  newVector(.25,.25,.75),               DIFF),//Rght 
-    newSphere(1e5,  newVector(50.0,40.8, 1e5),      newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Back 
-    newSphere(1e5,  newVector(50.0,40.8,-1e5+170),  newVector(0, 0, 0),  newVector(0.0, 0.0, 0.0),             DIFF),//Frnt 
-    newSphere(1e5,  newVector(50.0, 1e5, 81.6),     newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Botm 
-    newSphere(1e5,  newVector(50.0,-1e5+81.6,81.6), newVector(0, 0, 0),  newVector(.75,.75,.75),               DIFF),//Top 
-    newSphere(16.5, newVector(27.0,16.5,47),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), SPEC),//Mirr 
-    newSphere(16.5, newVector(73.0,16.5,78),        newVector(0, 0, 0),  multiplyVec(newVector(1,1,1), 0.999), REFR),//Glas 
-    newSphere(600,  newVector(50.0,681.6-.27,81.6), newVector(12,12,12), newVector(0,0,0),                     DIFF) //Lite 
-}; 
-
-inline double clamp(double x) {
+double clamp(double x) {
     return x<0 ? 0 : x>1 ? 1 : x;
 }
 
-inline int toInt(double x) {
-    return int(pow(clamp(x),1/2.2)*255+.5);
+int toInt(double x) {
+    return (int) pow(clamp(x),1/2.2)*255+.5;
 }
 
-inline bool intersection(const Ray &r, double &t, int &id) {
+bool intersection(const Ray r, double t, int* id) {
 
-    // Generic counter variables.
-    int i = 0;
+    // Variable declaration.
+    double n   = sizeof(spheres) / sizeof(Sphere);
+    double d   = 0.0;
+    double inf = 1e20;
+    int i      = (int) n;
+    id         = id;
 
-    //	
-    double n = sizeof(spheres) / sizeof(Sphere);
-    double d = 0.0;
-    double inf=t=1e20;
+    // Start by treating t as infinity.
+    t = inf;
 
-    for(i=int(n); i--;) {
-        if ((d=intersect(spheres[i], r)) && d<t) {
-	    t=d;
-	    id=i;
-	} 
+    // For every sphere defined...
+    for (; i--;) {
+
+        // Determine the distance at which the sphere and a given ray
+        // intersect.
+        d = intersect(spheres[i], r);
+
+        // If distance is less than either infinity or the previously given
+        // distance amount...
+        if (d < t) {
+	    t  = d;
+	    id = &i;
+	}
     }
 
-    return t<inf; 
+    // If this intersects with some given ray before infinity, then
+    // mathematically speaking, it is an intersection. If that is the
+    // case then return success.
+    return t < inf;
 }
 
 //! Calculates the radiance of the ray reflection.
@@ -59,7 +56,7 @@ inline bool intersection(const Ray &r, double &t, int &id) {
  *
  * @return    Vec                vector containing the (x,y,z) of the ray
  */
-Vec radiance(const Ray &r, int depth, unsigned short *Xi) {
+Vec radiance(const Ray r, int depth, unsigned short *Xi) {
 
     // Variable declaration.
     Vec doubleN; 
@@ -74,12 +71,12 @@ Vec radiance(const Ray &r, int depth, unsigned short *Xi) {
     int id = 0;
 
     // If this doesn't intersect, then return black.
-    if (!intersection(r, t, id)) {
+    if (!intersection(r, t, &id)) {
         return newVector(0,0,0);
     }
 
     // Sphere w/ hit
-    const Sphere &obj = spheres[id];
+    const Sphere obj = spheres[id];
 
     Vec x  = multiplyVec(addVec(r.o,r.d), t);
     Vec n  = vectorNormal(subVec(x,obj.p));
@@ -227,11 +224,6 @@ Vec radiance(const Ray &r, int depth, unsigned short *Xi) {
 //
 int main(int argc, char *argv[])
 {
-    //
-    // TODO: this program is in the process of being rewritten, so
-    //       might want to ignore the broken stuff
-    //
-    
     // Generic counter variables.
     int i = 0;
     unsigned short x = 0;
@@ -242,6 +234,73 @@ int main(int argc, char *argv[])
     int s  = 0;
     int sx = 0;
     int sy = 0;
+
+    // Assign a chunk of memory for the array of spheres.
+    spheres = (Sphere*) calloc(9, sizeof(Sphere));
+
+    // Safety check, make sure this could actually assign memory for this
+    // spheres array.
+    if (!spheres) {
+        return 1;
+    }
+
+    // Left
+    spheres[0] = newSphere(1e5,
+                           newVector(1e5+1, 40.8, 81.6),
+                           newVector(0.0, 0.0, 0.0),
+                           newVector(.75, .25, .25),
+                           DIFF);
+    // Right
+    spheres[1] = newSphere(1e5,
+                           newVector(-1e5+99, 40.8, 81.6),
+                           newVector(0.0, 0.0, 0.0),
+                           newVector(.25,.25,.75),
+                           DIFF);
+    // Back
+    spheres[2] = newSphere(1e5,
+                           newVector(50.0, 40.8, 1e5),
+                           newVector(0.0, 0.0, 0.0),
+                           newVector(.75, .75, .75),
+                           DIFF);
+    // Front
+    spheres[3] = newSphere(1e5,
+                           newVector(50.0, 40.8, -1e5+170),
+                           newVector(0.0, 0.0, 0.0),
+                           newVector(0.0, 0.0, 0.0),
+                           DIFF);
+    // Bottom
+    spheres[4] = newSphere(1e5,
+                           newVector(50.0, 1e5, 81.6),
+                           newVector(0, 0, 0),
+                           newVector(.75, .75, .75),
+                           DIFF);
+
+    // Top
+    spheres[5] = newSphere(1e5,
+                           newVector(50.0, -1e5+81.6, 81.6),
+                           newVector(0, 0, 0),
+                           newVector(.75, .75, .75),
+                           DIFF);
+
+    // Mirror
+    spheres[6] = newSphere(16.5,
+                           newVector(27.0, 16.5, 47),
+                           newVector(0, 0, 0),
+                           multiplyVec(newVector(1,1,1), 0.999),
+                           SPEC);
+    // Glass
+    spheres[7] = newSphere(16.5,
+                           newVector(73.0, 16.5, 78),
+                           newVector(0, 0, 0),
+                           multiplyVec(newVector(1,1,1), 0.999),
+                           REFR);
+
+    // Light
+    spheres[8] = newSphere(600,
+                           newVector(50.0, 681.6 - .27, 81.6),
+                           newVector(12, 12, 12),
+                           newVector(0, 0, 0),
+                           DIFF);
 
     // Image width / height.
     int w = 1024;
@@ -284,7 +343,7 @@ int main(int argc, char *argv[])
           for (sy = 0, i = (h-y-1) * w+x; sy<2; sy++) {
   
   	      // For-loop thru 2x2 subpixel columns.
-              for (sx = 0; sx < 2; sx++, r=Vec()) {
+              for (sx = 0; sx < 2; sx++, r=newVector(0,0,0)) {
   
   		  // For all of the samples.
                   for (s = 0; s < samps; s++) {
@@ -321,8 +380,13 @@ int main(int argc, char *argv[])
     }
   
     // Open the image file, with write permissions.
-    FILE *f = fopen("image.ppm", "w");
-  
+    FILE *f = fopen("output.ppm", "w");
+
+    // Sanity check, make sure this could actually open a file.
+    if (!f) {
+        return 1;
+    }
+
     // Print the magic number containing the file format to the image file.
     fprintf(f, "P3\n%d %d\n%d\n", w, h, 255);
     
@@ -334,7 +398,8 @@ int main(int argc, char *argv[])
     // Close the generated image file.
     fclose(f);
 
-    // Append a newline in the event the end-user is using bash.
+    // Append a newline in the event the end-user is running this in some
+    // commandline shell, like bash.
     fprintf(stdout,"\n");
 
     // The program ended successfully.
