@@ -13,6 +13,7 @@
 #include <stdio.h>
 
 // Project-wide includes.
+#include "misc.h"
 #include "vec.h"
 #include "ray.h"
 #include "sphere.h"

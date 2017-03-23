@@ -25,12 +25,14 @@ CC = cc
 
 # Headers
 HDR = cbench.h \
+      misc.h \
       vec.h \
       ray.h \
       sphere.h
 
 # C sources
 SRC = cbench.c \
+      misc.c \
       vec.c \
       ray.c \
       sphere.c
