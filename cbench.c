@@ -7,6 +7,15 @@
 
 Sphere* spheres;
 
+//! Calculate whether a given ray intersects with any of the spheres
+//! present in this scene.
+/*
+ * @param     Ray       given ray to check with
+ * @param     double    top limit
+ * @param     int*      pointer to the ID of the sphere that was intersected
+ *
+ * @return    bool      whether or not this ray intersected with a sphere
+ */
 bool intersection(const Ray r, double t, int* id) {
 
     // Variable declaration.
