@@ -350,10 +350,12 @@ int main(int argc, char *argv[])
                   for (s = 0; s < samps; s++) {
 
 		      // First ray sample.
-                      double r1=2*erand48(Xi), dx=r1<1 ? sqrt(r1)-1: 1-sqrt(2-r1);
+                      double r1 = 2*erand48(Xi);
+                      double dx = r1<1 ? sqrt(r1)-1: 1-sqrt(2-r1);
 
 		      // Second ray sample.
-                      double r2=2*erand48(Xi), dy=r2<1 ? sqrt(r2)-1: 1-sqrt(2-r2);
+                      double r2 = 2*erand48(Xi);
+                      double dy = r2<1 ? sqrt(r2)-1: 1-sqrt(2-r2);
 
                       Vec adjCx = multiplyVec(cx, ((sx+.5 + dx)/2 + x)/w - .5);
                       Vec adjCy = multiplyVec(cy, ((sy+.5 + dy)/2 + y)/h - .5);
