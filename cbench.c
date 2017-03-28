@@ -106,7 +106,7 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
         // Calculate the diffuse vector.
         double r1  = 2*M_PI*erand48(Xi);
         double r2  = erand48(Xi);
-        double r2s = sqrt(r2); 
+        double r2s = sqrt(r2);
         Vec w      = nl;
         Vec uu     = (fabs(w.x) > .1) ? newVector(0,1,0) : newVector(1,1,1);
         Vec u      = vectorNormal(modVec(uu, w));
@@ -154,10 +154,11 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
     double nt    = 1.5;
     double nnt   = into ? nc/nt : nt/nc;
     double ddn   = dot(r.d, nl);
-    double cos2t = 0;
+    double cos2t = 1 - nnt * nnt * (1 - ddn * ddn);
 
-    // Total internal reflection. 
-    if ((cos2t = 1 - nnt * nnt * (1 - ddn * ddn)) < 0) {
+    // If the total internal reflection is less than zero, simply combine
+    // it with the radinance of the reflective ray.
+    if (cos2t < 0) {
         f = multiplyVectors(f, radiance(reflRay, depth, Xi));
         return addVec(obj.e, f);
     }
