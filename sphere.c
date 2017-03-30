@@ -40,7 +40,7 @@ Sphere newSphere(double radius, Vec position, Vec emission, Vec colour,
  * @return    double    if intersect    --> distance
  *                      no intersection --> 0.0
  */
-double intersect(const Sphere s, const Ray r) {
+double intersectSphereAndRay(const Sphere s, const Ray r) {
 
     //
     // Solve t^2*d.d + 2*t*(o-p).d + (o-p).(o-p)-R^2 = 0

@@ -33,11 +33,11 @@ bool intersection(const Ray r, double t, int* id) {
 
         // Determine the distance at which the sphere and a given ray
         // intersect.
-        d = intersect(spheres[i], r);
+        d = intersectSphereAndRay(spheres[i], r);
 
         // If distance is less than either infinity or the previously given
         // distance amount...
-        if (d < t) {
+        if (d && d < t) {
 	    t  = d;
 	    id = &i;
 	}
@@ -108,7 +108,7 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
         double r2  = erand48(Xi);
         double r2s = sqrt(r2);
         Vec w      = nl;
-        Vec uu     = (fabs(w.x) > .1) ? newVector(0,1,0) : newVector(1,1,1);
+        Vec uu     = (fabs(w.x) > .1) ? newVector(0,1,0) : newVector(1,0,0);
         Vec u      = vectorNormal(modVec(uu, w));
         Vec v      = modVec(w, u);
         Vec dd1    = multiplyVec(u, cos(r1) * r2s);

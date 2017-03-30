@@ -53,6 +53,6 @@ Sphere newSphere(double, Vec, Vec, Vec, unsigned int);
  * @return    double    if intersect    --> distance
  *                      no intersection --> 0.0
  */
-double intersect(const Sphere s, const Ray r);
+double intersectSphereAndRay(const Sphere s, const Ray r);
 
 #endif
