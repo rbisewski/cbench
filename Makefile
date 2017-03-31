@@ -10,7 +10,7 @@ LIBS= -L/usr/lib \
       -lm
 
 # Flags
-CFLAGS = -std=c99 \
+CFLAGS = -std=gnu11 \
          -O3 \
          -fopenmp \
          -fpic \
