@@ -15,14 +15,17 @@ Sphere* spheres;
  * @param     int*      pointer to the ID of the sphere that was intersected
  *
  * @return    bool      whether or not this ray intersected with a sphere
+ *
+ * TODO: this function appears to be broken in certain situations, consider
+ *       re-evaluating the logic here
  */
-bool intersection(const Ray r, double t, int* id) {
+bool intersection(const Ray r, int* id) {
 
     // Variable declaration.
-    double n   = sizeof(spheres) / sizeof(Sphere);
     double d   = 0.0;
+    double t   = 0.0;
     double inf = 1e20;
-    int i      = (int) n;
+    int i      = (int) sizeof(spheres);
     id         = id;
 
     // Start by treating t as infinity.
@@ -72,7 +75,7 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
     int id = 0;
 
     // If this doesn't intersect, then return black.
-    if (!intersection(r, t, &id)) {
+    if (!intersection(r, &id)) {
         return newVector(0,0,0);
     }
 
@@ -345,9 +348,10 @@ int main(int argc, char *argv[])
           for (sy = 0, i = (h-y-1) * w+x; sy<2; sy++) {
   
   	      // For-loop thru 2x2 subpixel columns.
-              for (sx = 0; sx < 2; sx++, r=newVector(0,0,0)) {
-  
+              for (sx = 0; sx < 2; sx++) {
+
   		  // For all of the samples.
+                  r = newVector(0,0,0);
                   for (s = 0; s < samps; s++) {
 
 		      // First ray sample.
