@@ -79,6 +79,6 @@ double intersectSphereAndRay(const Sphere s, const Ray r) {
     }
 
     // Otherwise the intersection occurred in neither direction, so then
-    // we can assume the sphere and the given ray.
+    // we can assume the sphere and the given ray never intersect.
     return 0.0;
 }

@@ -15,9 +15,6 @@ Sphere* spheres;
  * @param     int*      pointer to the ID of the sphere that was intersected
  *
  * @return    bool      whether or not this ray intersected with a sphere
- *
- * TODO: this function appears to be broken in certain situations, consider
- *       re-evaluating the logic here
  */
 bool intersection(const Ray r, int* id) {
 
@@ -42,7 +39,7 @@ bool intersection(const Ray r, int* id) {
         // distance amount...
         if (d && d < t) {
 	    t  = d;
-	    id = &i;
+	    *id = i;
 	}
     }
 
@@ -59,6 +56,9 @@ bool intersection(const Ray r, int* id) {
  * @param     unsigned short[]   array of requested Xs
  *
  * @return    Vec                vector containing the (x,y,z) of the ray
+ *
+ * TODO: this function appears to be broken in certain situations, consider
+ *       re-evaluating the logic here
  */
 Vec radiance(const Ray r, int depth, unsigned short *Xi) {
 
@@ -102,6 +102,12 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
             return obj.e;
 	}
     }
+
+    //
+    // TODO: the code after this point appears to incorrect, consider
+    //       fixing it to make it work again
+    //
+    return addVec(f, nl);
 
     // Ideal DIFFUSE reflection 
     if (obj.refl == DIFF) {
