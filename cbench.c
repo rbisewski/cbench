@@ -386,8 +386,9 @@ int main(int argc, char *argv[])
  
 		  // Assign the result to the picture element of the camera
                   // view (i.e. the pixel value).
-                  c[i] = addVec(c[i], newVector(clamp(r.x), clamp(r.y), clamp(r.z)));
-                  c[i] = multiplyVec(c[i], 0.25);
+                  Vec radQuarter = newVector(clamp(r.x) * 0.25,
+                    clamp(r.y) * 0.25, clamp(r.z) * 0.25);
+                  c[i] = addVec(c[i], radQuarter);
               }
           }
       }
