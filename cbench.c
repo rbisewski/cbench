@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
     spheres[1] = newSphere(1e5,
                            newVector(-1e5+99, 40.8, 81.6),
                            newVector(0.0, 0.0, 0.0),
-                           newVector(.25,.25,.75),
+                           newVector(.25, .25, .75),
                            DIFF);
     // Back
     spheres[2] = newSphere(1e5,
@@ -297,13 +297,13 @@ int main(int argc, char *argv[])
     spheres[6] = newSphere(16.5,
                            newVector(27.0, 16.5, 47),
                            newVector(0, 0, 0),
-                           multiplyVec(newVector(1,1,1), 0.999),
+                           newVector(0.999,0.999,0.999),
                            SPEC);
     // Glass
     spheres[7] = newSphere(16.5,
                            newVector(73.0, 16.5, 78),
                            newVector(0, 0, 0),
-                           multiplyVec(newVector(1,1,1), 0.999),
+                           newVector(0.999,0.999,0.999),
                            REFR);
 
     // Light
@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
     Ray cam     = newRay(newVector(50.0, 52.0, 295.6), camNorm);
 
     // Camera direction.
-    Vec cx = newVector(w*.5135/h, w*.5135/h, w*.5135/h);
+    Vec cx = newVector(w*.5135/h, 0, 0);
     Vec cy = multiplyVec(vectorNormal(modVec(cx, cam.d)), 0.5135);
     Vec r  = newVector(0,0,0);
     Vec *c = (Vec*) calloc(w*h, sizeof(Vec));
