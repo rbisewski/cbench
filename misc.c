@@ -34,5 +34,5 @@ double clamp(double x) {
  * @return   int       value of number as an integer.
  */
 int toInt(double x) {
-    return (int) pow(clamp(x), 0.4545) * 255.0 + 0.5;
+    return (int) pow(clamp(x), 0.454545) * 255.0 + 0.5;
 }

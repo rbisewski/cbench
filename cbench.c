@@ -93,8 +93,8 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
     // If the given depth is greater than 5...
     if (++depth > 5) {
 
-        // If less than the max reflection value, 
-        if (erand48(Xi) < p) {
+        // If less than the max reflection value
+        if (erand48(Xi) < p && p != 0.0) {
             f = multiplyVec(f, (1/p));
 
 	// Otherwise return the object as-is.
@@ -113,7 +113,7 @@ Vec radiance(const Ray r, int depth, unsigned short *Xi) {
     if (obj.refl == DIFF) {
 
         // Calculate the diffuse vector.
-        double r1  = 2*M_PI*erand48(Xi);
+        double r1  = 2 * M_PI * erand48(Xi);
         double r2  = erand48(Xi);
         double r2s = sqrt(r2);
         Vec w      = nl;
