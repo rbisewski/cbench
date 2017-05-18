@@ -3,9 +3,10 @@
 cbench is a tiny software rendering program that uses OpenMP to
 parallelize a rendered scene.
 
-Originally this was utilized as a multi-thread CPU benchmark for my own
-servers and systems, ideally headless or at least independent of Xorg or
-other graphical and GUI based systems.
+Currently this is being utilized as a multi-threaded CPU benchmark for my
+own servers and systems, ideally headless or at least independent of Xorg
+or other graphical and GUI based systems. Ergo it can be a helpful
+commandline way to massively benchmark a given system.
 
 The code itself is based off of a fork of the famous 99 line C++ smallpt
 software renderer created by Kevin Beason in 2008.
@@ -31,13 +32,13 @@ Run make and copy cbench to the relevant bin directory on your OS.
 
 # Running cbench
 
-cbench <samples>
+    cbench <samples>
 
-Where "samples" refers to the number of paths to render.
+Where "samples" refer to the number of paths to render.
 
 An example usage case would be... 
 
-cbench 7000
+    cbench 7000
 
 This will attempt to path trace 7000 samples so this could take a long
 time on slower computers, however, anything new should not take more than
