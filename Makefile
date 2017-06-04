@@ -1,5 +1,10 @@
 # Version
-VERSION = 17.5
+VERSION = `date +%y.%m`
+
+# If unable to grab the version, default to N/A
+ifndef VERSION
+    VERSION = "n/a"
+endif
 
 # Includes
 INCLUDES= -I. \
