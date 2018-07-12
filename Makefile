@@ -62,8 +62,8 @@ all: cbench
 	@${CC} -c ${CFLAGS} $<
 
 cbench: ${OBJ}
-	@echo ${CC} ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} $^
-	@${CC} ${CFLAGS} ${INCLUDES} -o $@ ${LIBS} $^
+	@echo ${CC} ${CFLAGS} ${INCLUDES} -o $@ $^ ${LIBS}
+	@${CC} ${CFLAGS} ${INCLUDES} -o $@ $^ ${LIBS}
 
 clean:
 	@echo cleaning
